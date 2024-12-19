@@ -20,6 +20,7 @@ This project is my journey through learning a OpenGL Graphics API
 3. **Install FreeGLUT using vcpkg**:
    - Open a terminal and navigate to the vcpkg directory.
    - Run the following command to install FreeGLUT:
+
      ```sh
      .\vcpkg install freeglut:x64-windows
      ```
@@ -27,6 +28,7 @@ This project is my journey through learning a OpenGL Graphics API
 4. **Configure Visual Studio Code**:
    - Create a [.vscode](http://_vscodecontentref_/1) directory in your project folder.
    - Create a `tasks.json` file in the [.vscode](http://_vscodecontentref_/2) directory with the following content:
+
      ```json
      {
        "version": "2.0.0",

@@ -1,6 +1,6 @@
 # OpenGL Mini Project
 
-This project demonstrates a simple OpenGL application using FreeGLUT to render a rotating, colorful wheel and display a message when the F1 key is pressed.
+This project is my journey through learning a OpenGL Graphics API
 
 ## Requirements
 

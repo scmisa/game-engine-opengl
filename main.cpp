@@ -7,28 +7,54 @@
 using namespace std;
 
 float angle = 0.0;
+bool f1Pressed = false;
 
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -5.0f);
-    glRotatef(angle, 0.0f, 1.0f, 0.0f);
+    // glRotatef(angle, 0.0f, 0.0f, 1.0f); // Rotate around the z-axis
 
-    glBegin(GL_TRIANGLES);
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-1.0f, -1.0f, 0.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(1.0f, -1.0f, 0.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 1.0f, 0.0f);
+    int numSegments = 12; // Number of segments to approximate the wheel
+    float radius = 1.0f;  // Radius of the wheel
+
+    glBegin(GL_TRIANGLE_FAN);
+    glColor3f(1.0f, 1.0f, 1.0f); // Set the color to white for the center
+    glVertex2f(0.0f, 0.0f);      // Center of the wheel
+
+    for (int i = 0; i <= numSegments; ++i)
+    {
+        float theta = 2.0f * 3.1415926f * float(i) / float(numSegments); // Calculate the angle for this segment
+        float x = radius * cosf(theta);                                  // Calculate the x coordinate
+        float y = radius * sinf(theta);                                  // Calculate the y coordinate
+
+        // Alternate colors for each segment
+        if (i % 2 == 0)
+            glColor3f(1.0f, 0.0f, 0.0f); // Red
+        else
+            glColor3f(0.0f, 0.0f, 1.0f); // Blue
+
+        glVertex2f(x, y); // Output vertex
+    }
+
     glEnd();
+
+    if (f1Pressed)
+    {
+        glColor3f(1.0f, 1.0f, 1.0f); // Set the color to white
+        glRasterPos2f(-1.0f, 1.0f);  // Position the text
+        const char *text = "F1 key was pressed";
+        for (const char *c = text; *c != '\0'; c++)
+        {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
+        }
+    }
 
     glutSwapBuffers();
     angle += 0.1f;
     glutPostRedisplay(); // Ensure continuous rendering
 }
-
 void init()
 {
     glEnable(GL_DEPTH_TEST);
@@ -54,6 +80,14 @@ void keyboard(unsigned char key, int x, int y)
         exit(0);
 }
 
+void special(int key, int x, int y)
+{
+    if (key == GLUT_KEY_F1)
+    {
+        f1Pressed = true;
+    }
+}
+
 int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
@@ -64,6 +98,7 @@ int main(int argc, char **argv)
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
+    glutSpecialFunc(special);
     glutMainLoop();
     return 0;
 }

@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <GL/glut.h>
 #include <iostream>
+#include <GL/glu.h>
+#include <GL/gl.h>
 
 using namespace std;
 
@@ -37,6 +39,21 @@ void init()
     glMatrixMode(GL_MODELVIEW);
 }
 
+void reshape(int w, int h)
+{
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, (float)w / (float)h, 1.0, 100.0);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void keyboard(unsigned char key, int x, int y)
+{
+    if (key == 27)
+        exit(0);
+}
+
 int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
@@ -45,6 +62,8 @@ int main(int argc, char **argv)
     glutCreateWindow("OpenGL Test");
     init();
     glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyboard);
     glutMainLoop();
     return 0;
 }

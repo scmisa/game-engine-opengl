@@ -1,104 +1,154 @@
-#include <windows.h>
-#include <GL/glut.h>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
-#include <GL/glu.h>
-#include <GL/gl.h>
 
-using namespace std;
-
-float angle = 0.0;
-bool f1Pressed = false;
-
-void display()
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -5.0f);
-    // glRotatef(angle, 0.0f, 0.0f, 1.0f); // Rotate around the z-axis
+    glViewport(0, 0, width, height);
+}
 
-    int numSegments = 12; // Number of segments to approximate the wheel
-    float radius = 1.0f;  // Radius of the wheel
+void processInput(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
 
-    glBegin(GL_TRIANGLE_FAN);
-    glColor3f(1.0f, 1.0f, 1.0f); // Set the color to white for the center
-    glVertex2f(0.0f, 0.0f);      // Center of the wheel
+const char *vertexShaderSource = R"(
+#version 330 core
+layout (location = 0) in vec3 aPos;
+void main() {
+    gl_Position = vec4(aPos, 1.0);
+}
+)";
 
-    for (int i = 0; i <= numSegments; ++i)
+const char *fragmentShaderSource = R"(
+#version 330 core
+out vec4 FragColor;
+void main() {
+    FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Red color
+}
+)";
+
+int main()
+{
+    // Initialize GLFW
+    if (!glfwInit())
     {
-        float theta = 2.0f * 3.1415926f * float(i) / float(numSegments); // Calculate the angle for this segment
-        float x = radius * cosf(theta);                                  // Calculate the x coordinate
-        float y = radius * sinf(theta);                                  // Calculate the y coordinate
-
-        // Alternate colors for each segment
-        if (i % 2 == 0)
-            glColor3f(1.0f, 0.0f, 0.0f); // Red
-        else
-            glColor3f(0.0f, 0.0f, 1.0f); // Blue
-
-        glVertex2f(x, y); // Output vertex
+        std::cerr << "Failed to initialize GLFW" << std::endl;
+        return -1;
     }
 
-    glEnd();
-
-    if (f1Pressed)
+    // Create a GLFW window
+    GLFWwindow *window = glfwCreateWindow(800, 600, "Triangle RGB", nullptr, nullptr);
+    if (!window)
     {
-        glColor3f(1.0f, 1.0f, 1.0f); // Set the color to white
-        glRasterPos2f(-1.0f, 1.0f);  // Position the text
-        const char *text = "F1 key was pressed";
-        for (const char *c = text; *c != '\0'; c++)
-        {
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
-        }
+        std::cerr << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // Initialize GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        return -1;
     }
 
-    glutSwapBuffers();
-    angle += 0.1f;
-    glutPostRedisplay(); // Ensure continuous rendering
-}
-void init()
-{
-    glEnable(GL_DEPTH_TEST);
-    glViewport(0, 0, 800, 600); // Set the viewport
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0, 800.0 / 600.0, 1.0, 100.0);
-    glMatrixMode(GL_MODELVIEW);
-}
+    // Build and compile the vertex shader
+    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+    glCompileShader(vertexShader);
 
-void reshape(int w, int h)
-{
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0, (float)w / (float)h, 1.0, 100.0);
-    glMatrixMode(GL_MODELVIEW);
-}
-
-void keyboard(unsigned char key, int x, int y)
-{
-    if (key == 27)
-        exit(0);
-}
-
-void special(int key, int x, int y)
-{
-    if (key == GLUT_KEY_F1)
+    // Check for shader compile errors
+    int success;
+    char infoLog[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success)
     {
-        f1Pressed = true;
+        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+        std::cerr << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
+                  << infoLog << std::endl;
     }
-}
 
-int main(int argc, char **argv)
-{
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(800, 600);
-    glutCreateWindow("OpenGL Test");
-    init();
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutKeyboardFunc(keyboard);
-    glutSpecialFunc(special);
-    glutMainLoop();
+    // Build and compile the fragment shader
+    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
+    glCompileShader(fragmentShader);
+
+    // Check for shader compile errors
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+        std::cerr << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
+                  << infoLog << std::endl;
+    }
+
+    // Link shaders
+    unsigned int shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+
+    // Check for linking errors
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+        glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
+        std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
+                  << infoLog << std::endl;
+    }
+
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    // Set up vertex data and buffers and configure vertex attributes
+    float vertices[] = {
+        -0.5f, -0.5f, 0.0f, // Bottom left
+        0.5f, -0.5f, 0.0f,  // Bottom right
+        0.0f, 0.5f, 0.0f    // Top
+    };
+
+    unsigned int VBO, VAO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+
+    glBindVertexArray(VAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    // Render loop
+    while (!glfwWindowShouldClose(window))
+    {
+        processInput(window);
+
+        // Render
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Draw the triangle
+        glUseProgram(shaderProgram);
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        // Swap buffers and poll IO events
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    // Clean up
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteProgram(shaderProgram);
+
+    glfwTerminate();
     return 0;
 }

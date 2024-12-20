@@ -1,5 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
@@ -16,8 +19,9 @@ void processInput(GLFWwindow *window)
 const char *vertexShaderSource = R"(
 #version 330 core
 layout (location = 0) in vec3 aPos;
+uniform mat4 transform;
 void main() {
-    gl_Position = vec4(aPos, 1.0);
+    gl_Position = transform * vec4(aPos, 1.0);
 }
 )";
 
@@ -25,7 +29,7 @@ const char *fragmentShaderSource = R"(
 #version 330 core
 out vec4 FragColor;
 void main() {
-    FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Red color
+    FragColor = vec4(0.5, 0.3, 1.0, 1.0); // violet color
 }
 )";
 
@@ -134,8 +138,18 @@ int main()
         // Render
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Draw the triangle
+        // Create transformation matrix
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+        // Get the location of the transform uniform
+        int transformLoc = glGetUniformLocation(shaderProgram, "transform");
+
+        // Pass the transformation matrix to the shader
         glUseProgram(shaderProgram);
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+        // Draw the triangle
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 

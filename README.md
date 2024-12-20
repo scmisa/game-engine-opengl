@@ -17,17 +17,18 @@ This project is my journey through learning a OpenGL Graphics API
 2. **Install vcpkg**:
    - Follow the instructions to install vcpkg from the [vcpkg GitHub repository](https://github.com/microsoft/vcpkg).
 
-3. **Install FreeGLUT using vcpkg**:
+3. **Install GLFW and GLAD using vcpkg**:
    - Open a terminal and navigate to the vcpkg directory.
-   - Run the following command to install FreeGLUT:
+   - Run the following commands to install GLFW and GLAD:
 
      ```sh
-     .\vcpkg install freeglut:x64-windows
+     .\vcpkg install glfw3:x64-windows
+     .\vcpkg install glad:x64-windows
      ```
 
 4. **Configure Visual Studio Code**:
-   - Create a [.vscode](http://_vscodecontentref_/1) directory in your project folder.
-   - Create a `tasks.json` file in the [.vscode](http://_vscodecontentref_/2) directory with the following content:
+   - Create a `.vscode` directory in your project folder.
+   - Create a `tasks.json` file in the `.vscode` directory with the following content:
 
      ```json
      {
@@ -57,9 +58,9 @@ This project is my journey through learning a OpenGL Graphics API
              "${file}",
              "/link",
              "/LIBPATH:C:/Users/kuba-/vcpkg/installed/x64-windows/lib",
-             "freeglut.lib",
+             "glfw3.lib",
+             "glad.lib",
              "opengl32.lib",
-             "glu32.lib",
              "/OUT:${fileDirname}/${fileBasenameNoExtension}.exe",
              "/machine:x64"
            ],
@@ -94,9 +95,9 @@ This project is my journey through learning a OpenGL Graphics API
              "${file}",
              "/link",
              "/LIBPATH:C:/Users/kuba-/vcpkg/installed/x64-windows/lib",
-             "freeglut.lib",
+             "glfw3.lib",
+             "glad.lib",
              "opengl32.lib",
-             "glu32.lib",
              "/OUT:${fileDirname}/${fileBasenameNoExtension}.exe",
              "/machine:x64"
            ],
@@ -111,7 +112,7 @@ This project is my journey through learning a OpenGL Graphics API
      ```
 
 5. **Copy Required DLLs**:
-   - Copy [freeglut.dll](http://_vscodecontentref_/3) from `C:/Users/kuba-/vcpkg/installed/x64-windows/bin` to the directory where your executable (`main.exe`) is located.
+   - Copy `glfw3.dll` from `C:/Users/kuba-/vcpkg/installed/x64-windows/bin` to the directory where your executable (`main.exe`) is located.
 
 6. **Write Your OpenGL Code**
 

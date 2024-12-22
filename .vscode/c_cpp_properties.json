@@ -1,7 +1,7 @@
 {
   "configurations": [
     {
-      "name": "opengl",
+      "name": "opengl-windows",
       "includePath": [
         "${workspaceFolder}/**",
         "C:/Users/kuba-/vcpkg/installed/x64-windows/include",
@@ -17,14 +17,28 @@
         "UNICODE",
         "_UNICODE",
         "_WIN32",
-        "_AMD64", // Define the target architecture
-        "WIN32_LEAN_AND_MEAN" // Exclude rarely-used stuff from Windows headers
+        "_AMD64",
+        "WIN32_LEAN_AND_MEAN"
       ],
       "windowsSdkVersion": "10.0.26100.0",
       "compilerPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe",
       "cStandard": "c11",
       "cppStandard": "c++17",
       "intelliSenseMode": "msvc-x64"
+    },
+    {
+      "name": "opengl-linux",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/home/${env:USER}/vcpkg/installed/x64-linux/include",
+        "/usr/include",
+        "/usr/local/include"
+      ],
+      "defines": ["_DEBUG", "UNICODE", "_UNICODE", "_LINUX", "_AMD64"],
+      "compilerPath": "/usr/bin/g++",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x64"
     }
   ],
   "version": 4

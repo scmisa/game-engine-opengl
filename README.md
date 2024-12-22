@@ -1,6 +1,6 @@
 # OpenGL Mini Project
 
-This project is my journey through learning a OpenGL Graphics API
+This project is my journey through learning a OpenGL Graphics API. Building and trying to build game engine.
 
 ## Requirements
 

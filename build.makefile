@@ -10,4 +10,8 @@ $(VCPKG_DIR)/vcpkg:
 install_deps: $(VCPKG_DIR)/vcpkg
     $(VCPKG_DIR)/vcpkg install glfw3:x64-linux glad:x64-linux
 
-.PHONY: install_deps
+# Build the project
+build: install_deps
+    g++ -std=c++17 -I$(VCPKG_DIR)/installed/x64-linux/include -I./include main.cpp -L$(VCPKG_DIR)/installed/x64-linux/lib -L./lib -lglfw -lglad -lGL -ldl -lpthread -o main
+
+.PHONY: install_deps build

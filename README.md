@@ -50,10 +50,10 @@ This project is my journey through learning a OpenGL Graphics API. Building and 
      ```
 
 5. **Configure Visual Studio Code**:
-   - The `.vscode` directory and its configuration files are already provided in the project.
+   - The [.vscode](http://_vscodecontentref_/1) directory and its configuration files are already provided in the project.
 
 6. **Copy Required DLLs**:
-   - Copy `glfw3.dll` from `C:/Users/<your-username>/vcpkg/installed/x64-windows/bin` to the directory where your executable (`main.exe`) is located.
+   - Copy [glfw3.dll](http://_vscodecontentref_/2) from `C:/Users/<your-username>/vcpkg/installed/x64-windows/bin` to the directory where your executable (`main.exe`) is located.
 
 7. **Write Your OpenGL Code**
 
@@ -65,25 +65,24 @@ This project is my journey through learning a OpenGL Graphics API. Building and 
 ### Linux
 
 1. **Install vcpkg, GLFW, and GLAD**:
-   - Run the provided `install.sh` script to install vcpkg, GLFW, and GLAD:
+   - Run the provided [install.sh](http://_vscodecontentref_/3) script to install vcpkg, GLFW, and GLAD:
 
      ```sh
      ./install.sh
      ```
 
 2. **Configure Visual Studio Code**:
-   - The `.vscode` directory and its configuration files are already provided in the project.
+   - The [.vscode](http://_vscodecontentref_/4) directory and its configuration files are already provided in the project.
 
 3. **Write Your OpenGL Code**
 
 4. **Build and Run**:
-   - You can use the provided Makefile to build and install the project:
+   - You can use the provided [build.makefile](http://_vscodecontentref_/5) to build and install the project:
      - Open a terminal and navigate to your project directory.
      - Run the following commands:
 
        ```sh
-       make install_deps
-       make
+       make -f build.makefile build
        ```
 
    - Open Visual Studio Code.

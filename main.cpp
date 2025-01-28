@@ -6,7 +6,7 @@
 #include <iostream>
 
 float rotationAngle = 0.0f;
-float rotationSpeed = 30.0f; // Degrees per second
+float rotationSpeed = 13.0f; // Degrees per second
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
@@ -39,9 +39,9 @@ in float side;
 out vec4 FragColor;
 void main() {
     if (side == 1.0)
-        FragColor = vec4(0.8, 0.2, 0.2, 1.0); // Red for sides
+        FragColor = vec4(0.2, 0.6, 0.2, 1.0); // Red for sides
     else
-        FragColor = vec4(0.2, 0.8, 0.2, 1.0); // Green for base
+        FragColor = vec4(0.5, 0.2, 0.2, 1.0); // Green for base
 }
 )";
 
@@ -132,7 +132,7 @@ int main()
     {
         processInput(window);
 
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.8f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float currentFrame = glfwGetTime();

@@ -6,7 +6,9 @@
 #include <iostream>
 
 float rotationAngle = 0.0f;
-float rotationSpeed = 13.0f; // Degrees per second
+float rotationSpeed = 20.0f; // Degrees per second
+float lastFrame = 0.0f;      // Time of last frame
+float deltaTime = 0.0f;      // Time between current frame and last frame
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
@@ -17,6 +19,12 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+        rotationSpeed += 1.0f; // Increase rotation speed
+
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        rotationSpeed -= 1.0f; // Decrease rotation speed
 }
 
 const char *vertexShaderSource = R"(
@@ -130,13 +138,18 @@ int main()
     // Render loop
     while (!glfwWindowShouldClose(window))
     {
+        // Calculate delta time
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         processInput(window);
 
         glClearColor(0.8f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        float currentFrame = glfwGetTime();
-        rotationAngle = currentFrame * rotationSpeed;
+        // Update rotation angle
+        rotationAngle += rotationSpeed * deltaTime;
 
         // Create transformation matrices
         glm::mat4 model = glm::mat4(1.0f);

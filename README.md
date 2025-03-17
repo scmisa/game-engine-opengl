@@ -1,17 +1,22 @@
-# OpenGL Mini Project
+# I'm moving out from this project i got lost in it and also for of setting up stuff is not very good, 
+# VS Code is really good text editor but i think full IDE is better with setting up and also it is much more comfortable.
+# Soon will be other project created on my github that i will be studying on it and building my own 3D Engine
+
+
+### OpenGL Mini Project
 
 This project is my journey through learning a OpenGL Graphics API. Building and trying to build game engine.
 
-## Requirements
+#### Requirements
 
 - Windows or Linux OS
 - Visual Studio Code (version 1.60 or later)
 - Microsoft Visual Studio Build Tools (version 2019 or later) for Windows
 - vcpkg package manager (latest version)
 
-## Setup Instructions
+### Setup Instructions
 
-### Windows
+#### Windows
 
 1. **Install Visual Studio Build Tools**:
    - Download and install [Microsoft Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
@@ -62,7 +67,7 @@ This project is my journey through learning a OpenGL Graphics API. Building and 
    - Open the terminal in Visual Studio Code and run the build task by pressing `Ctrl+Shift+B`.
    - Run the generated executable (`main.exe`).
 
-### Linux
+##### Linux
 
 1. **Install vcpkg, GLFW, and GLAD**:
    - Run the provided [install.sh](http://_vscodecontentref_/3) script to install vcpkg, GLFW, and GLAD:
@@ -89,6 +94,6 @@ This project is my journey through learning a OpenGL Graphics API. Building and 
    - Open the terminal in Visual Studio Code and run the build task by pressing `Ctrl+Shift+B`.
    - Run the generated executable (`main`).
 
-## License
+#### License
 
 This project is licensed under the MIT License.

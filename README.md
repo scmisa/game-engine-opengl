@@ -1,8 +1,3 @@
-# I'm moving out from this project i got lost in it and also for of setting up stuff is not very good, 
-# VS Code is really good text editor but i think full IDE is better with setting up and also it is much more comfortable.
-# Soon will be other project created on my github that i will be studying on it and building my own 3D Engine
-
-
 ### OpenGL Mini Project
 
 This project is my journey through learning a OpenGL Graphics API. Building and trying to build game engine.

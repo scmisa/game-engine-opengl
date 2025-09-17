@@ -2,7 +2,7 @@
 REM filepath: /C:/Users/your-username/opengl-mini/build.bat
 
 REM Set the path to vcpkg
-set VCPKG_ROOT=C:\Users\kuba-\vcpkg
+set VCPKG_ROOT=C:\Users\Jakub\vcpkg
 
 REM Check if vcpkg is installed
 if not exist "%VCPKG_ROOT%\vcpkg.exe" (

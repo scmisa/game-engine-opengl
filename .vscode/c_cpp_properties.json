@@ -4,13 +4,7 @@
       "name": "opengl-windows",
       "includePath": [
         "${workspaceFolder}/**",
-        "C:/Users/kuba-/vcpkg/installed/x64-windows/include",
-        "C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt",
-        "C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/shared",
-        "C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um",
-        "C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/winrt",
-        "C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/cppwinrt",
-        "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/include"
+        "C:/Users/Jakub/vcpkg/installed/x64-windows/include"
       ],
       "defines": [
         "_DEBUG",

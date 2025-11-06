@@ -1,8 +1,8 @@
-### OpenGL Mini Project
+# OpenGL Mini Project
 
 This project is my journey through learning a OpenGL Graphics API. Building and trying to build game engine.
 
-#### Requirements
+## Requirements
 
 - Windows or Linux OS
 - Visual Studio Code (version 1.60 or later)
